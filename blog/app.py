@@ -1,33 +1,14 @@
-from time import time
+from flask import Flask
 
-from flask import Flask, request, g
+from my_blog.user.view import user
+from my_blog.article.view import article
 
-app = Flask(__name__)
-
-
-@app.route('/<string:search>', methods=['GET', 'POST'])
-def index(search: str):
-    """
-
-    :param search:
-    :return:
-    """
-    return f'hello, {request.method} !'
+def create_app() -> Flask:
+    app = Flask(__name__)
+    register_blueprint(app)
+    return app
 
 
-@app.before_request
-def process_before_request():
-    g.start_time = time()
-
-
-@app.after_request
-def process_after_request(response):
-    if hasattr(g, "start_time"):
-        response.headers["process-time"] = time() - g.start_time
-    return response
-
-
-@app.errorhandler(404)
-def handler_484(error):
-    app.logger.error(error)
-    return '484'
+def register_blueprint(app: Flask):
+    app.register_blueprint(user)
+    app.register_blueprint(article)

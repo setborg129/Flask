@@ -1,0 +1,29 @@
+
+{% block css %}
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" >
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+<div class="card" style="width: 18rem;">
+  <div class="card-header">
+    <h1>Articles:</h1>
+  </div>
+  <ul class="list-group list-group-flush">
+{% for article_id in articles %}
+        <ul>
+            <li>
+                <a href="{{ url_for('article.article_id', a_id=article_id ) }}"> {{ articles[article_id]['title'] }}</a>
+            </li>
+        </ul>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}
+
+
